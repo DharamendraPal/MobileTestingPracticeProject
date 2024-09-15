@@ -30,7 +30,7 @@ public class MobileCommands {
 		System.out.println("Starting Commands Execution");
 		DesiredCapabilities cap = new DesiredCapabilities();
 		cap.setCapability("appium:deviceName", "OPPO A77s");
-		cap.setCapability("appium:udid", "f348518");
+		cap.setCapability("appium:udid", "");
 		cap.setCapability("platformName", "Android");
 		cap.setCapability("appium:platformVersion", "14");
 		cap.setCapability("appium:automationName", "UiAutomator2");
