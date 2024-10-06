@@ -30,7 +30,7 @@ public class MobileGestureCommands1 {
 	public static void startAPP(String apkPath) throws MalformedURLException, InterruptedException {
 		System.out.println("Starting Commands Execution");
 		DesiredCapabilities cap = new DesiredCapabilities();
-		cap.setCapability("appium:deviceName", "OPPO A77s");
+		cap.setCapability("appium:deviceName", "");
 		cap.setCapability("appium:udid", "");
 		cap.setCapability("platformName", "Android");
 		cap.setCapability("appium:platformVersion", "14");
