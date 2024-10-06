@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 
-public class AndriodMobileGesture {
+public class MobileGestureCommands1 {
 	
 	//static AppiumDriver driver;
 	static AndroidDriver driver;//polymorphic reference
@@ -42,7 +42,8 @@ public class AndriodMobileGesture {
 		cap.setCapability("appium:app", "D:\\MobileAutomationLearning\\AppsApk\\ApiDemosApp.apk");
 		cap.setCapability("appium:app",apkPath);
 		//URL url= new URL("http://127.0.0.1:4723/wd/hub");
-		URL url= new URL("http://192.168.116.29:4723/");
+		//URL url= new URL("http://192.168.116.29:4723/");
+		URL url= new URL("http://192.168.32.29:4723/");
 		//driver= new AppiumDriver(url,cap);
 		driver = new AndroidDriver(url, cap);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
@@ -58,7 +59,8 @@ public class AndriodMobileGesture {
 
 		// Long CLick on the First Red Circle
 		//dragAndDrop(element);
-		//Scroll Tll Last on Element
+		//dragAndDrop(); // This method will be called when No Elements are used
+		//Scroll Till Last Element
 		ScrollTillDown();
 	}
 	
@@ -75,8 +77,8 @@ public class AndriodMobileGesture {
 	public static void dragAndDrop(WebElement element) {
 		driver.executeScript("mobile: dragGesture", ImmutableMap.of(
 				"elementId", ((RemoteWebElement) element).getId(),
-				"endX", 700,// It is the X coordinate where you want to Drop
-				"endY", 1050,// It is the y coordinate where you want to Drop
+				"endX", 483,// It is the X coordinate where you want to Drop
+				"endY", 706,// It is the y coordinate where you want to Drop
 				"speed",500
 		));
 	}
@@ -85,8 +87,8 @@ public class AndriodMobileGesture {
 				//elementId", ((RemoteWebElement) element).getId(),
 				"startX", 200,// It is the X coordinate for the Element which you want to Drag
 				"startY", 585,// It is the Y coordinate for the Element which you want to Drag
-				"endX", 700,// It is the X coordinate where you want to Drop
-				"endY", 1050,// It is the y coordinate where you want to Drop
+				"endX", 483,// It is the X coordinate where you want to Drop
+				"endY", 706,// It is the y coordinate where you want to Drop
 				"speed",500
 		));
 	}
@@ -102,11 +104,13 @@ public class AndriodMobileGesture {
 		));
 		
 		String element=driver.findElement(AppiumBy.accessibilityId("WebView3")).getText();
-		if(canScrollMore && element.contains("WebView3"))
+		System.out.println(element);
+		if(element.contains("WebView3"))
 		{
 			System.out.println("Scroll Till Last on View Page");
 		}
 	
 	
 	}
+	
 }
