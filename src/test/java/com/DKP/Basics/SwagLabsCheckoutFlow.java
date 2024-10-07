@@ -23,11 +23,11 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 
 public class SwagLabsCheckoutFlow {
 	public static AndroidDriver driver;
-	public static void main(String[] args) throws MalformedURLException {
+	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 		UiAutomator2Options option = new UiAutomator2Options();
 		option.setPlatformName("Android");
 		option.setDeviceName("OPPO A77s");
-		option.setUdid("f348518");
+		option.setUdid("");
 		option.setAutomationName("UiAutomator2");
 		option.setAppPackage("com.swaglabsmobileapp");
 		option.setAppActivity("com.swaglabsmobileapp.SplashActivity");
@@ -66,9 +66,14 @@ public class SwagLabsCheckoutFlow {
 		System.out.println("desiredY-->" + desiredY);// 29
 
 		tap(desiredX, desiredY);
-		
+		Thread.sleep(5);
+		doubletap(desiredX, desiredY);
+		Thread.sleep(5);
 		By el = AppiumBy.accessibilityId("test-CHECKOUT");
-		scrollToElement(el);
+		//scrollToElement(el);
+		//WebElement elem=driver.findElement(AppiumBy.accessibilityId("test-CHECKOUT"));
+		ScrollIntoElement(el);
+		
 		driver.findElement(AppiumBy.accessibilityId("test-CHECKOUT")).click();
 		
 		
@@ -78,7 +83,7 @@ public class SwagLabsCheckoutFlow {
 		
 		driver.findElement(AppiumBy.accessibilityId("test-CONTINUE")).click();
 		
-		 el = AppiumBy.accessibilityId("test-FINISH");
+		el = AppiumBy.accessibilityId("test-FINISH");
 		scrollToElement(el);
 		driver.findElement(AppiumBy.accessibilityId("test-FINISH")).click();
 		System.out.println("Clicked o Finish Button");
@@ -98,6 +103,22 @@ public class SwagLabsCheckoutFlow {
 				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 		driver.perform(Collections.singletonList(sequence));
 		System.out.println("Tap with Coordinates");
+	}
+	
+	public static void doubletap(int x, int y)
+	{
+		PointerInput finger =new PointerInput(PointerInput.Kind.TOUCH,"finger");
+		Sequence sequence = new Sequence(finger, 1)
+				.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), x, y))
+				.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+				.addAction(new Pause(finger, Duration.ofMillis(150)))
+				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()))
+				.addAction(new Pause(finger, Duration.ofMillis(150)))
+				.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+				.addAction(new Pause(finger, Duration.ofMillis(150)))
+				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+		driver.perform(Collections.singletonList(sequence));
+		System.out.println("DoubleTap with Coordinates");
 	}
 	
 public static void scrollToElement(By by) {
@@ -127,5 +148,46 @@ public static void scrollToElement(By by) {
 
 	}
 
+	public static void ScrollFromMiddle() {
+
+		Dimension size=driver.manage().window().getSize();
+		
+		int StartX=size.width/2;
+		int StartY=size.height/2;
+		int EndX=StartX;
+		int EndY=(int) (StartY*0.2);
+		
+		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+		Sequence sequence = new Sequence(finger, 1)
+				.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), StartX, StartY))
+				.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
+				.addAction(new Pause(finger, Duration.ofMillis(150)))
+				.addAction(finger.createPointerMove(Duration.ofMillis(250), PointerInput.Origin.viewport(), EndX, EndY))
+				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+		driver.perform(Collections.singletonList(sequence));
+		System.out.println("Scroll with Coordinates");
+
+	}
+
+	
+	public static void ScrollIntoElement(By by)
+	{
+		/*
+		while(!(driver.findElement(by).isDisplayed()))
+		{
+			ScrollFromMiddle();
+		}*/
+		
+		
+		while (true) {
+			//System.out.println("Inside While element");
+			try {
+				WebElement element = driver.findElement(by);
+				break;
+			} catch (Exception e) {
+				ScrollFromMiddle();
+			}
+		}
+	}
 
 }
